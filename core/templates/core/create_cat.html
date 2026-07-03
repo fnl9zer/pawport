@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Add Cat - PawPort</title></head>
+<body>
+    <h1>Add Your Cat</h1>
+    <p>Owner: {{ owner.name }}</p>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Cat Profile</button>
+    </form>
+</body>
+</html>

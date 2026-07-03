@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>{{ property.title }} - PawPort</title></head>
+<body>
+    <h1>{{ property.title }}</h1>
+    <p><strong>Address:</strong> {{ property.address }}, {{ property.state }}</p>
+    <p><strong>Rent:</strong> RM{{ property.monthly_rent }}/month</p>
+    <p><strong>Pet Deposit:</strong> RM{{ property.pet_deposit }}</p>
+    <p><strong>Max Cats:</strong> {{ property.max_cats_allowed }}</p>
+    <p><strong>Notes:</strong> {{ property.notes }}</p>
+    <a href="/properties/{{ property.pk }}/apply/">Apply with My Cat</a>
+    <br><br>
+    <a href="/properties/">← Back to listings</a>
+</body>
+</html>

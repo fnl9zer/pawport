@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>Properties - PawPort</title></head>
+<body>
+    <h1>Available Pet-Friendly Properties</h1>
+    {% for p in properties %}
+        <div>
+            <h2>{{ p.title }}</h2>
+            <p>{{ p.address }}, {{ p.state }}</p>
+            <p>RM{{ p.monthly_rent }}/month</p>
+            <a href="/properties/{{ p.pk }}/">View Details</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No properties available yet.</p>
+    {% endfor %}
+</body>
+</html>

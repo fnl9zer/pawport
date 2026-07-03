@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Apply - PawPort</title></head>
+<body>
+    <h1>Apply to {{ property.title }}</h1>
+    <p>{{ property.address }}, {{ property.state }}</p>
+    <p>RM{{ property.monthly_rent }}/month</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Application</button>
+    </form>
+    <a href="/properties/">← Back to listings</a>
+</body>
+</html>

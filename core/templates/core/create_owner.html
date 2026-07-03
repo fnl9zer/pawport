@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Register - PawPort</title></head>
+<body>
+    <h1>Create Your Profile</h1>
+    <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Next: Add Your Cat</button>
+    </form>
+</body>
+</html>
