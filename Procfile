@@ -1,1 +1,1 @@
-web: gunicorn pawport.wsgi
+web: python manage.py migrate && gunicorn pawport.wsgi
