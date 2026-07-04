@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 from .models import Property, Owner, Cat, Application
-from .forms import OwnerForm, CatForm, ApplicationForm
+from .forms import RegisterForm, CatForm, ApplicationForm
 
 def home(request):
     return render(request, 'core/home.html')
@@ -15,12 +17,25 @@ def property_detail(request, pk):
 
 def create_owner(request):
     if request.method == 'POST':
-        form = OwnerForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            owner = form.save()
+            # create the user
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password']
+            )
+            # create the owner profile
+            owner = Owner.objects.create(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                phone=form.cleaned_data['phone']
+            )
+            # log them in automatically
+            login(request, user)
             return redirect('create_cat', owner_id=owner.pk)
     else:
-        form = OwnerForm()
+        form = RegisterForm()
     return render(request, 'core/create_owner.html', {'form': form})
 
 def create_cat(request, owner_id):
