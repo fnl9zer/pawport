@@ -66,3 +66,9 @@ def apply_to_property(request, property_pk):
 
 def application_success(request):
     return render(request, 'core/application_success.html')
+
+def create_admin(request):
+    from django.contrib.auth.models import User
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@pawport.com', 'pawport123')
+    return render(request, 'core/home.html')
