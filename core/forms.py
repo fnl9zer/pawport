@@ -19,6 +19,11 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("Passwords don't match!")
         if username and User.objects.filter(username=username).exists():
             raise forms.ValidationError("Username already taken, please choose another!")
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Username already taken, please choose another!")
+        email = cleaned_data.get('email')
+        if email and Owner.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email already registered, please login instead!")
         return cleaned_data
 
 class OwnerForm(forms.ModelForm):
