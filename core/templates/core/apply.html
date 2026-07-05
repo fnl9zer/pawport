@@ -2,7 +2,18 @@
 <html>
 <head><title>Apply - PawPort</title></head>
 <body>
-    <h1>Apply to {{ property.title }}</h1>
+
+    {% if submitted %}
+    <div id="popup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;">
+        <div style="background:#FFC84A; padding:40px; border-radius:20px; text-align:center;">
+            <h1>APPLICATION SUBMITTED SUCCESSFULLY!</h1>
+            <p>Your application has been sent. The landlord will review your cat's profile and get back to you.</p>
+            <a href="/properties/"><button>Browse more listings</button></a>
+        </div>
+    </div>
+    {% endif %}
+
+    <h1>Apply for {{ property.title }}</h1>
     <p>{{ property.address }}, {{ property.state }}</p>
     <p>RM{{ property.monthly_rent }}/month</p>
     <form method="post">

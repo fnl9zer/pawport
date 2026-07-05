@@ -3,13 +3,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from .models import Property, Owner, Cat, Application
 from .forms import RegisterForm, CatForm, ApplicationForm
+from django.shortcuts import redirect
 
 def home(request):
     return render(request, 'core/home.html')
 
 def property_list(request):
-    properties = Property.objects.filter(is_available=True)
-    return render(request, 'core/property_list.html', {'properties': properties})
+    query = request.GET.get('state', '')
+    if query:
+        properties = Property.objects.filter(is_available=True, state__icontains=query)
+    else:
+        properties = Property.objects.filter(is_available=True)
+    return render(request, 'core/property_list.html', {'properties': properties, 'query': query})
 
 def property_detail(request, pk):
     property = get_object_or_404(Property, pk=pk)
@@ -19,19 +24,19 @@ def create_owner(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            # create the user
+            # create user
             user = User.objects.create_user(
                 username=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
                 password=form.cleaned_data['password']
             )
-            # create the owner profile
+            # create owner profile
             owner = Owner.objects.create(
-                name=form.cleaned_data['name'],
+                name=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
                 phone=form.cleaned_data['phone']
             )
-            # log them in automatically
+            # log in automatically
             login(request, user)
             return redirect('create_cat', owner_id=owner.pk)
     else:
@@ -53,22 +58,35 @@ def create_cat(request, owner_id):
 
 def apply_to_property(request, property_pk):
     property = get_object_or_404(Property, pk=property_pk)
+    submitted = False
     if request.method == 'POST':
         form = ApplicationForm(request.POST)
         if form.is_valid():
             application = form.save(commit=False)
             application.property = property
             application.save()
-            return redirect('application_success')
+            submitted = True
+            form = ApplicationForm()
     else:
         form = ApplicationForm()
-    return render(request, 'core/apply.html', {'form': form, 'property': property})
+    return render(request, 'core/apply.html', {'form': form, 'property': property, 'submitted': submitted})
 
 def application_success(request):
     return render(request, 'core/application_success.html')
+
+def forgot_password(request):
+    sent = False
+    if request.method == 'POST':
+        sent = True
+    return render(request, 'core/forgot_password.html', {'sent': sent})
 
 def create_admin(request):
     from django.contrib.auth.models import User
     if not User.objects.filter(username='admin').exists():
         User.objects.create_superuser('admin', 'admin@pawport.com', 'pawport123')
     return render(request, 'core/home.html')
+
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('property_list')
+    return redirect('login')

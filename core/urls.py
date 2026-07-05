@@ -12,6 +12,7 @@ urlpatterns = [
     path('register/', views.create_owner, name='create_owner'),
     path('register/<int:owner_id>/cat/', views.create_cat, name='create_cat'),
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
+    path('forgot-password/', views.forgot_password, name='forgot_password'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('setup-admin/', views.create_admin, name='create_admin'),
 ]
