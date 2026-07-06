@@ -1,22 +1,274 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head><title>Properties - PawPort</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Properties - PawPort</title>
+    <style>
+        @font-face {
+            font-family: 'PeaceSans';
+            src: url("{% static 'core/Peace_Sans_Webfont.ttf' %}") format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            background-color: #f3c357;
+            min-height: 100vh;
+            padding: 40px 60px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .title {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 52px;
+            color: #5a331d;
+            line-height: 1.1;
+            max-width: 400px;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .search-input {
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: 2.5px solid #5a331d;
+            background-color: #ffffff;
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 15px;
+            color: #5a331d;
+            outline: none;
+            width: 260px;
+        }
+
+        .search-input::placeholder {
+            color: #5a331d;
+            opacity: 0.6;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #5a331d;
+            padding: 8px;
+        }
+
+        .header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            border: 2.5px solid #5a331d;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background-color: #d4eaf7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #a8d8ea 0%, #87ceac 60%, #5a9e6f 100%);
+        }
+
+        .view-details-btn {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            padding: 12px;
+            border-radius: 50px;
+            border: 2.5px solid #5a331d;
+            background-color: #5a331d;
+            color: #ffffff;
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
+            display: block;
+        }
+
+        .view-details-btn:hover {
+            background-color: transparent;
+            color: #5a331d;
+        }
+
+        .card-info {
+            padding: 16px 20px 20px;
+        }
+
+        .card-title {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 20px;
+            color: #5a331d;
+            margin-bottom: 6px;
+        }
+
+        .card-location {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 13px;
+            color: #f57220;
+            display: inline;
+        }
+
+        .card-price {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 13px;
+            color: #5a331d;
+            float: right;
+        }
+
+        .no-results {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            color: #5a331d;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 60px;
+            grid-column: 1 / -1;
+        }
+
+        .logout-link {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 13px;
+            color: #5a331d;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 20px;
+            }
+
+            .title {
+                font-size: 36px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-input {
+                width: 180px;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
 <body>
-    <h1>Browse Properties</h1>
-    <form method="get">
-        <input type="text" name="state" placeholder="Search by state" value="{{ query }}">
-        <button type="submit">Search</button>
-    </form>
-    {% for p in properties %}
-        <div>
-            <h2>{{ p.title }}</h2>
-            <p>{{ p.address }}, {{ p.state }}</p>
-            <p>RM{{ p.monthly_rent }}/month</p>
-            <a href="/properties/{{ p.pk }}/">View Details</a>
+
+    <div class="header-row">
+        {% if query %}
+            <h1 class="title">{{ query|upper }}</h1>
+         else %}
+            <h1 class="title">BROWSE<br>PROPERTIES</h1>
+        {% endif %}
+        <img src="{% static 'core/cat.png' %}" alt="PawPort" class="logo">
+        <div class="search-form">
+            <form method="get" style="display:flex; align-items:center; gap:8px;">
+                <input type="text" name="state" placeholder="Search by state" class="search-input" value="{{ query }}">
+                <button type="submit" class="search-btn"><img src="{% static 'core/search-icon.png' %}" alt="search" style="width:24px;height:24px;"></button>
+            </form>
+            <form method="post" action="/logout/" style="display:inline">
+                {% csrf_token %}
+                <button type="submit" class="logout-link" style="background:none; border:none; cursor:pointer;">Logout</button>
+            </form>
         </div>
-        <hr>
-    {% empty %}
-        <p>No properties found.</p>
-    {% endfor %}
+    </div>
+
+    <div class="cards-grid">
+        {% for p in properties %}
+        <div class="card">
+            <div class="card-image">
+                <div class="card-image-placeholder"></div>
+                <a href="/properties/{{ p.pk }}/" class="view-details-btn">View Details</a>
+            </div>
+            <div class="card-info">
+                <h2 class="card-title">{{ p.title|upper }}</h2>
+                <span class="card-location">{{ p.state }}</span>
+                <span class="card-price">RM{{ p.monthly_rent }}/month</span>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-results">No properties found for "{{ query }}".</p>
+        {% endfor %}
+    </div>
 </body>
 </html>
