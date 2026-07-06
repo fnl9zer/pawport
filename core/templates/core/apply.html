@@ -65,18 +65,19 @@
             border: 2px solid #f57220;
         }
 
-        .property-info .rent {
+        .property-info .name {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 22px;
+            font-size: 24px;
             color: #f57220;
             font-weight: bold;
+            margin-bottom: 2px;
         }
 
-        .property-info .name {
+        .property-info .rent {
             font-family: 'PeaceSans', sans-serif;
             font-size: 18px;
             color: #f57220;
-            margin: 4px 0;
+            opacity: 0.9;
         }
 
         .property-info .address {
@@ -84,6 +85,7 @@
             font-size: 14px;
             color: #f57220;
             opacity: 0.8;
+            margin-top: 4px;
         }
 
         .property-info .cat-label {
@@ -134,6 +136,24 @@
             border-radius: 16px;
             resize: vertical;
             min-height: 80px;
+        }
+
+        /* Style dropdown to match the cat label above */
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f57220' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            cursor: pointer;
+            color: #f57220;
+        }
+
+        .form-group select option {
+            background-color: #f3c357;
+            color: #f57220;
+            padding: 10px;
         }
 
         .form-group input::placeholder,
@@ -272,11 +292,11 @@
                 height: 70px;
             }
 
-            .property-info .rent {
-                font-size: 18px;
+            .property-info .name {
+                font-size: 20px;
             }
 
-            .property-info .name {
+            .property-info .rent {
                 font-size: 16px;
             }
 
@@ -307,8 +327,8 @@
         <h1 class="apply-title">APPLY FOR</h1>
         
         <div class="property-info">
-            <div class="rent">RM{{ property.monthly_rent }}/month</div>
             <div class="name">{{ property.title }}</div>
+            <div class="rent">RM{{ property.monthly_rent }}/month</div>
             <div class="address">{{ property.address }}, {{ property.state }}</div>
             <div class="cat-label">Cat: {{ cat_name|default:"Your Cat" }}</div>
         </div>
@@ -321,7 +341,14 @@
                 <textarea id="message" name="message" placeholder="Write a message to the landlord..."></textarea>
             </div>
             
-            {{ form.as_p }}
+            {% for field in form %}
+                {% if field.name != 'message' %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </div>
+                {% endif %}
+            {% endfor %}
             
             <button type="submit" class="btn-primary">Submit Application</button>
         </form>
@@ -329,7 +356,6 @@
         <a href="/properties/" class="back-link">← Back to listings</a>
     </div>
 
-    <!-- Popup (shown when submitted is true) -->
     {% if submitted %}
     <div id="popup">
         <div class="popup-card">
