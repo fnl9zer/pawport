@@ -49,7 +49,7 @@
 
         .apply-title {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 24px;
+            font-size: 54px;
             color: #f57220;
             text-align: center;
             letter-spacing: 1px;
@@ -62,12 +62,12 @@
             border-radius: 16px;
             padding: 16px 20px;
             text-align: center;
-            border: 2px solid #f57220;
+            border: 6px solid #f57220;
         }
 
         .property-info .name {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 24px;
+            font-size: 30px;
             color: #f57220;
             font-weight: bold;
             margin-bottom: 2px;
@@ -330,7 +330,6 @@
             <div class="name">{{ property.title }}</div>
             <div class="rent">RM{{ property.monthly_rent }}/month</div>
             <div class="address">{{ property.address }}, {{ property.state }}</div>
-            <div class="cat-label">Cat: {{ cat_name|default:"Your Cat" }}</div>
         </div>
         
         <form method="post">
