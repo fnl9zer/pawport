@@ -1,4 +1,47 @@
-<% load static %>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apply - PawPort</title>
+    <style>
+        @font-face {
+            font-family: 'PeaceSans';
+            src: url("{% static 'core/Peace_Sans_Webfont.ttf' %}") format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        /* ... rest of your styles ... */
+    </style>
+</head>
+<body>
+    <!-- Main apply form -->
+    <div class="card">
+        <h1>Apply for {{ property.title }}</h1>
+        <p>{{ property.address }}, {{ property.state }}</p>
+        <p>RM{{ property.monthly_rent }}/month</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary">Submit Application</button>
+        </form>
+        <a href="/properties/">← Back to listings</a>
+    </div>
+
+    <!-- Popup (shown when submitted is true) -->
+    {% if submitted %}
+    <div id="popup">
+        <div class="popup-card">
+            <img src="{% static 'core/cat.png' %}" alt="PawPort" class="cat-icon">
+            <div class="success-box">
+                <h2>APPLICATION SUBMITTED SUCCESSFULLY!</h2>
+                <p>Your application has been sent. The landlord will review your cat's profile and get back to you.</p>
+            </div>
+            <a href="/properties/" class="btn-primary">Browse more listings</a>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>
 <!DOCTYPE html>
 <html>
 <head>
