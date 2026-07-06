@@ -237,14 +237,18 @@
     <div class="header-row">
         {% if query %}
             <h1 class="title">{{ query|upper }}</h1>
-         else %}
+        {% else %}
             <h1 class="title">BROWSE<br>PROPERTIES</h1>
         {% endif %}
         <img src="{% static 'core/cat.png' %}" alt="PawPort" class="logo">
         <div class="search-form">
             <form method="get" style="display:flex; align-items:center; gap:8px;">
-                <input type="text" name="state" placeholder="Search by state" class="search-input" value="{{ query }}">
-                <button type="submit" class="search-btn"><img src="{% static 'core/search-icon.png' %}" alt="search" style="width:24px;height:24px;"></button>
+                <div style="position:relative; display:inline-block;">
+                    <input type="text" name="state" placeholder="Search by state" class="search-input" value="{{ query }}" style="padding-right: 50px;">
+                    <button type="submit" class="search-btn" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;">
+                        <img src="{% static 'core/search-icon.png' %}" alt="search" style="width:20px;height:20px;">
+                    </button>
+                </div>
             </form>
             <form method="post" action="/logout/" style="display:inline">
                 {% csrf_token %}
