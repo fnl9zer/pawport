@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Apply - PawPort</title>
+    <title>Apply</title>
     <style>
         @font-face {
             font-family: 'PeaceSans';
@@ -50,7 +50,7 @@
 
         .apply-title {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 24px;
+            font-size: 54px;
             color: #5a331d;
             text-align: center;
             letter-spacing: 1px;
@@ -63,12 +63,12 @@
             border-radius: 16px;
             padding: 16px 20px;
             text-align: center;
-            border: 2px solid #5a331d;
+            border: 2.5px solid #5a331d;
         }
 
         .property-info .name {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 24px;
+            font-size: 30px;
             color: #5a331d;
             font-weight: bold;
             margin-bottom: 2px;
@@ -76,14 +76,14 @@
 
         .property-info .rent {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 18px;
+            font-size: 19px;
             color: #5a331d;
             opacity: 0.9;
         }
 
         .property-info .address {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             color: #5a331d;
             opacity: 0.8;
             margin-top: 4px;
@@ -91,7 +91,7 @@
 
         .property-info .cat-label {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             color: #5a331d;
             margin-top: 6px;
             background-color: #e8ddd5;
@@ -113,7 +113,7 @@
 
         .form-group label {
             font-family: 'PeaceSans', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             color: #5a331d;
             display: block;
             margin-bottom: 4px;
@@ -128,7 +128,7 @@
             border: 2.5px solid #5a331d;
             background-color: #ffffff;
             font-family: 'PeaceSans', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             color: #5a331d;
             outline: none;
             transition: border-color 0.3s;
@@ -175,7 +175,7 @@
             padding: 18px;
             border-radius: 50px;
             border: none;
-            background-color: #5a331d;
+            background-color: #f57220;
             color: white;
             font-family: 'PeaceSans', sans-serif;
             font-size: 18px;
@@ -193,6 +193,32 @@
         }
 
         .btn-primary:active {
+            transform: translateY(1px);
+        }
+
+        .popup-btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 50px;
+            border: none;
+            background-color: #f57220;
+            color: white;
+            font-family: 'PeaceSans', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background-color 0.2s, transform 0.1s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .popup-btn:hover {
+            background-color: #e06518;
+            transform: translateY(-1px);
+        }
+
+        .popup-btn:active {
             transform: translateY(1px);
         }
 
@@ -225,9 +251,9 @@
         }
 
         #popup .popup-card {
-            background-color: #ffffff;
+            background-color: #f3c357;
             border-radius: 24px;
-            border: 6px solid #5a331d;
+            border: 6px solid #f57220;
             padding: 40px 50px 50px;
             width: 100%;
             max-width: 480px;
@@ -237,7 +263,6 @@
             gap: 16px;
             margin: 20px;
             animation: popIn 0.3s ease;
-            box-shadow: 0 8px 32px rgba(90, 51, 29, 0.25);
         }
 
         @keyframes popIn {
@@ -260,17 +285,16 @@
 
         #popup .popup-box {
             width: 100%;
-            background-color: #f8f4f0;
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 16px;
             padding: 20px 24px;
             text-align: center;
-            border: 2px solid #5a331d;
         }
 
         #popup .popup-box h2 {
             font-family: 'PeaceSans', sans-serif;
             font-size: 22px;
-            color: #5a331d;
+            color: #f57220;
             margin-bottom: 12px;
             letter-spacing: 1px;
         }
@@ -278,18 +302,9 @@
         #popup .popup-box p {
             font-family: 'PeaceSans', sans-serif;
             font-size: 15px;
-            color: #5a331d;
+            color: #f57220;
             line-height: 1.6;
             opacity: 0.9;
-        }
-
-        #popup .btn-primary {
-            width: 100%;
-            background-color: #5a331d;
-        }
-
-        #popup .btn-primary:hover {
-            background-color: #7a4529;
         }
 
         /* Mobile */
@@ -333,11 +348,6 @@
             #popup .popup-box p {
                 font-size: 13px;
             }
-
-            .btn-primary {
-                font-size: 16px;
-                padding: 16px;
-            }
         }
     </style>
 </head>
@@ -351,7 +361,6 @@
             <div class="name">{{ property.title }}</div>
             <div class="rent">RM{{ property.monthly_rent }}/month</div>
             <div class="address">{{ property.address }}, {{ property.state }}</div>
-            <div class="cat-label">Cat: {{ cat_name|default:"Your Cat" }}</div>
         </div>
         
         <form method="post">
@@ -377,7 +386,6 @@
         <a href="/properties/" class="back-link">← Back to listings</a>
     </div>
 
-    <!-- Popup (shown when submitted is true) -->
     {% if submitted %}
     <div id="popup">
         <div class="popup-card">
@@ -386,7 +394,7 @@
                 <h2>APPLICATION SUBMITTED SUCCESSFULLY!</h2>
                 <p>Your application has been sent. The landlord will review your cat's profile and get back to you.</p>
             </div>
-            <a href="/properties/" class="btn-primary">Browse more listings</a>
+            <a href="/properties/" class="popup-btn">Browse more listings</a>
         </div>
     </div>
     {% endif %}
