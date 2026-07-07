@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html land="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, inital-scale=1.0">
@@ -149,6 +149,7 @@
             font-size: 42px;
             color: #c63031;
             line-height: 1.1;
+            text-align: center;
         }
  
         .info-card {
@@ -202,6 +203,8 @@
             text-decoration: none;
             margin-top: 4px;
             opacity: 0.8;
+            text-align: center;
+            display: block;
         }
 
         .back-link:hover {
@@ -226,6 +229,11 @@
  
             .card {
                 padding: 20px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 4px;
             }
         }
     </style>
