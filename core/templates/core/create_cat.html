@@ -1,13 +1,245 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-<head><title>Add Cat - PawPort</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Your Cat</title>
+    <style>
+        @font-face {
+            font-family: 'PeaceSans';
+            src: url("{% static 'core/Peace_Sans_Webfont.ttf' %}") format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            border: 3px solid #5a331d;
+            padding: 40px 50px 50px;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin: 20px;
+        }
+
+        .cat-icon {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin-bottom: 4px;
+        }
+
+        .title {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 52px;
+            color: #5a331d;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 50px;
+            border: 2.5px solid #5a331d;
+            background-color: #ffffff;
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 16px;
+            color: #5a331d;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .input-field::placeholder {
+            color: #5a331d;
+            opacity: 0.6;
+        }
+
+        .input-field:focus {
+            background-color: #ffffff;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row .input-field {
+            flex: 1;
+        }
+
+        /* Neutered checkbox row */
+        .bottom-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .neutered-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 16px;
+            color: #5a331d;
+            cursor: pointer;
+        }
+
+        .neutered-label input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: #5a331d;
+            cursor: pointer;
+        }
+
+        /* Custom file upload */
+        .photo-label {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 16px;
+            color: #5a331d;
+        }
+
+        .file-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-upload-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 2.5px solid #5a331d;
+            background-color: #5a331d;
+            color: #ffffff;
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .file-upload-btn:hover {
+            background-color: #5a331d;
+        }
+
+        .file-name {
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 13px;
+            color: #5a331d;
+            opacity: 0.7;
+        }
+
+        #photo-input {
+            display: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            border-radius: 50px;
+            border: none;
+            background-color: #5a331d;
+            color: white;
+            font-family: 'PeaceSans', Arial, sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a331d;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 24px 40px;
+                margin: 16px;
+            }
+
+            .title {
+                font-size: 36px;
+            }
+
+            .row {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .bottom-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
 <body>
-    <h1>Add Your Cat</h1>
-    <p>Owner: {{ owner.name }}</p>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Cat Profile</button>
-    </form>
+    <div class="card">
+        <img src="{% static 'core/cat.png' %}" alt="PawPort cat" class="cat-icon">
+        <h1 class="title">YOUR CAT</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Name" class="input-field" required>
+            <div class="row">
+                <input type="text" name="breed" placeholder="Breed" class="input-field">
+                <input type="number" name="age" placeholder="Age" class="input-field" min="0" required>
+            </div>
+            <input type="text" name="vaccination_record" placeholder="Vaccination Record" class="input-field">
+            <input type="text" name="landlord_reference" placeholder="Landlord Reference" class="input-field">
+
+            <div class="bottom-row">
+                <label class="neutered-label">
+                    <input type="checkbox" name="is_neutered">
+                    Neutered?
+                </label>
+                <div class="file-upload-wrapper">
+                    <span class="photo-label">Photo:</span>
+                    <label class="file-upload-btn" for="photo-input">Choose File</label>
+                    <span class="file-name" id="file-name-display">No file chosen</span>
+                    <input type="file" id="photo-input" name="photo" accept="image/*">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Create Cat Profile</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('photo-input').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('file-name-display').textContent = fileName;
+        });
+    </script>
 </body>
 </html>
