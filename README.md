@@ -74,40 +74,9 @@ Admin: http://127.0.0.1:8000/admin/
 | DATABASE_URL | PostgreSQL connection string (for production) |
 | SECRET_KEY | Django secret key |
 
-## Deployment on Railway
-
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login
-railway login
-
-# Deploy
-railway up
-
 # Run migrations
 railway run python manage.py migrate
 railway run python manage.py createsuperuser
-
-## Project Structure
-
-pawport/
-├── core/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── admin.py
-│   ├── forms.py
-|   ├── static/core/
-│   └── templates/core/
-├── pawport/
-│   └── settings.py
-├── .gitignore
-├── Procfile
-├── data.json
-├── db.sqlite3
-├── manage.py
-└── requirements.txt
 
 ## License
 
@@ -115,6 +84,5 @@ This project was created for the #hackthekitty 2026 hackathon.
 
 ## Author
 
-Dania (@seven2wentys /ig)
+Dania (@seven2wentys /ig) *sorry its a bit messsy, im still learning how to write my own README.md
 - GitHub: [@fnl9zer](https://github.com/fnl9zer)
-```
