@@ -80,12 +80,6 @@ def forgot_password(request):
         sent = True
     return render(request, 'core/forgot_password.html', {'sent': sent})
 
-def create_admin(request):
-    from django.contrib.auth.models import User
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser('admin', 'admin@pawport.com', 'pawport123')
-    return render(request, 'core/home.html')
-
 def home(request):
     if request.user.is_authenticated:
         return redirect('property_list')
